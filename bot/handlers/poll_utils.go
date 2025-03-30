@@ -27,9 +27,11 @@ func getPollByID(id string) (*poll.Poll, error) {
     if e != nil {
         return nil, e
     }
+
     if len(r.Tuples()) == 0 {
         return nil, fmt.Errorf("poll %s not found", id)
     }
+
     t := r.Tuples()[0]
     p := &poll.Poll{
         ID:       t[0].(string),
@@ -39,6 +41,7 @@ func getPollByID(id string) (*poll.Poll, error) {
         Votes:    toMapStringSlice(t[4]),
         IsActive: t[5].(bool),
     }
+
     return p, nil
 }
 
@@ -47,11 +50,13 @@ func toStringSlice(i interface{}) []string {
     if !ok {
         return nil
     }
+
     var out []string
     for _, v := range arr {
         s, _ := v.(string)
         out = append(out, s)
     }
+
     return out
 }
 
@@ -60,6 +65,7 @@ func toMapStringSlice(i interface{}) map[string][]string {
     if !ok {
         return nil
     }
+
     out := make(map[string][]string)
     for k, v := range m {
         ks, _ := k.(string)
@@ -67,6 +73,7 @@ func toMapStringSlice(i interface{}) map[string][]string {
         if !ok {
             continue
         }
+
         var tmp []string
         for _, x := range vs {
             xs, _ := x.(string)
@@ -74,5 +81,6 @@ func toMapStringSlice(i interface{}) map[string][]string {
         }
         out[ks] = tmp
     }
+	
     return out
 }

@@ -1,15 +1,15 @@
-#Инструкция: 
+### Инструкция: 
 1. Склонировать и перейти в репозиторий
 ```
 git clone https://github.com/robodanill/vote-bot.git
 cd vote-bot
 ```
-2. Развернуть сервер mattermost (если вдруг нет своего). Будет доступен на порте 8065 localhost
+2. Развернуть mattermost (если вдруг нет своего). Будет доступен на порте 8065 localhost
 ```
 docker-compose up -d
 ```
 3. Перейти http://localhost:8065
-* Зарегистрироваться, создать организацию и настроить, для этого в левом верхнем меню Integrations -> Slash Commands -> Add Slash Command. 
+* Зарегистрироваться, создать организацию от администратора и настроить, для этого в левом верхнем меню Integrations -> Slash Commands -> Add Slash Command. 
 * Command Trigger Word: votebot. Request URL - адрес, где развернут сервис. http://<Адрес машины>:8081/command. Title: Vote Bot. Response Username: VoteBot
 * Сохранить полученный Токен. 
 4. Перейти в рабочую директорию для запуска бота. 

@@ -15,22 +15,27 @@ func handleCreate(cmd, userID, text string) string {
 	if len(a) < 2 {
 		return fmtCreateError(cmd)
 	}
+
 	q := a[0]
 	opts := a[1:]
 	id, err := createPoll(userID, q, opts)
 	if err != nil {
 		return fmt.Sprintf("[%s] Error: %v", cmd, err)
 	}
+
 	return fmt.Sprintf("[%s] Created poll\nID: %s\nQuestion: %s\nOptions: %v", cmd, id, q, opts)
 }
 
 func createPoll(ownerID, question string, options []string) (string, error) {
 	id := uuid.New().String()
 	p := poll.Poll{ID: id, OwnerID: ownerID, Question: question, Options: options, Votes: map[string][]string{}, IsActive: true}
+	
 	_, err := db.Conn.Insert("polls", []interface{}{p.ID, p.OwnerID, p.Question, p.Options, p.Votes, p.IsActive})
+
 	if err != nil {
 		return "", err
 	}
+
 	return id, nil
 }
 

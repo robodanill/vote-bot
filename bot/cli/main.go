@@ -15,11 +15,14 @@ func main() {
         log.Fatal(err)
     }
     defer db.Close()
+
     p := config.AppPort
     if p == "" {
         p = "8081"
     }
+
     http.HandleFunc("/command", handlers.HandleCommand)
+	
     log.Println("Starting server on :" + p)
     err = http.ListenAndServe(":"+p, nil)
     if err != nil {

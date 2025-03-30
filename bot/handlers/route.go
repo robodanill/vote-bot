@@ -29,6 +29,7 @@ func validateToken(token string) error {
 	if config.MattermostToken != "" && token != config.MattermostToken {
 		return fmt.Errorf("unauthorized")
 	}
+
 	return nil
 }
 
@@ -37,5 +38,6 @@ func safeCut(s, prefix string) string {
 	if len(s) <= x {
 		return ""
 	}
+	
 	return strings.TrimSpace(s[x:])
 }
