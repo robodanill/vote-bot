@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  mattermost:
+    image: mattermost/mattermost-team-edition:7.10
+    container_name: mattermost
+    restart: unless-stopped
+    ports:
+      - "8065:8065"
+    environment:
+      MM_SERVICESETTINGS_SITEURL: http://localhost:8065
+      MM_SQLSETTINGS_DRIVERNAME: mysql
+      MM_SQLSETTINGS_DATASOURCE: mattermost:mattermost@tcp(db:3306)/mattermost?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: mattermost-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: exampleRootPassword
+      MYSQL_DATABASE: mattermost
+      MYSQL_USER: mattermost
+      MYSQL_PASSWORD: mattermost
+    ports:
+      - "3307:3306"
