@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  tarantool:
+    image: tarantool/tarantool:2.x
+    container_name: tarantool
+    volumes:
+      - ./init.lua:/opt/tarantool/init.lua
+    command: tarantool /opt/tarantool/init.lua
+    ports:
+      - "3301:3301"
+
+  vote-bot:
+    build: .
+    container_name: vote-bot
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      MATTERMOST_TOKEN: "xg1rs3s7nibyzqiy83jpaydiey"
+      TARANTOOL_HOST: "tarantool"
+      TARANTOOL_PORT: "3301"
+      TARANTOOL_USER: "guest"
+      TARANTOOL_PASS: ""
+      APP_PORT: "8081"
+    depends_on:
+      - tarantool
